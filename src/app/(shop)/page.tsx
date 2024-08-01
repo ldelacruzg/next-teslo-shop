@@ -1,7 +1,11 @@
+import { ProductGrid, Title } from "@/components";
+import { initialData } from "@/seed/seed";
+
 export default function HomePage() {
   return (
-    <div className="">
-      <h1>Home Page</h1>
-    </div>
+    <>
+      <Title title="Hombre" subtitle="Best Sellers" />
+      <ProductGrid products={initialData.products} />
+    </>
   );
 }
