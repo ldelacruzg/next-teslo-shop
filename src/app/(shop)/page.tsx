@@ -4,7 +4,7 @@ import { initialData } from "@/seed/seed";
 export default function HomePage() {
   return (
     <>
-      <Title title="Hombre" subtitle="Best Sellers" />
+      <Title title="ALL PRODUCTS" subtitle="Best Sellers" />
       <ProductGrid products={initialData.products} />
     </>
   );

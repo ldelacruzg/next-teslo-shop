@@ -21,8 +21,8 @@ export const TopMenu = () => {
       {/* Categories */}
       <div className="hidden sm:flex sm:gap-2">
         <Link href={'/category/men'} className="p-2 rounded transition-all hover:bg-gray-100">Men</Link>
-        <Link href={'/category/woman'} className="p-2 rounded transition-all hover:bg-gray-100">Woman</Link>
-        <Link href={'/category/kids'} className="p-2 rounded transition-all hover:bg-gray-100">Kids</Link>
+        <Link href={'/category/women'} className="p-2 rounded transition-all hover:bg-gray-100">Woman</Link>
+        <Link href={'/category/kid'} className="p-2 rounded transition-all hover:bg-gray-100">Kids</Link>
       </div>
 
       {/* Search, cart, menu */}
