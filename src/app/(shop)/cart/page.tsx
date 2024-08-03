@@ -8,8 +8,8 @@ export default function CartPage() {
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="flex flex-col w-full sm:w-[640px] lg:w-[1024px]">
-        <Title title={"CART"} />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        <Title title="CART" subtitle="Products to buy" />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-10">
           <div className="flex flex-col gap-8 lg:col-span-2 lg:pt-8">
             {
               products.map(product => (
