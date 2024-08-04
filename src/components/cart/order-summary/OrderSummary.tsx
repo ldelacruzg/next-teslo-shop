@@ -2,7 +2,7 @@ import Link from "next/link"
 
 interface Props {
   children?: React.ReactNode;
-  link: {
+  link?: {
     title: string;
     href: string;
   }
@@ -32,12 +32,16 @@ export const OrderSummary = ({ children, link }: Props) => {
         </div>
       </section>
 
-      <Link
-        href={link.href}
-        type="button"
-        className="bg-blue-600 text-white text-center font-bold py-2 rounded mt-6">
-        {link.title}
-      </Link>
+      {
+        link && (
+          <Link
+            href={link.href}
+            type="button"
+            className="bg-blue-600 text-white text-center font-bold py-2 rounded mt-6">
+            {link.title}
+          </Link>
+        )
+      }
     </div>
   )
 }
