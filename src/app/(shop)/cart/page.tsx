@@ -1,9 +1,15 @@
+import { redirect } from "next/navigation";
 import { CartItem, OrderSummary, Title } from "@/components";
 import { initialData } from "@/seed/seed";
 
 const products = initialData.products.slice(0, 3)
 
 export default function CartPage() {
+
+  if (products.length <= 0) {
+    redirect('/empty')
+  }
+
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="flex flex-col w-full sm:w-[640px] lg:w-[1024px]">
