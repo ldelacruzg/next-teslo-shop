@@ -31,7 +31,7 @@ export const Sidebar = () => {
           <div className="w-full h-px bg-gray-200 my-5" />
 
           <SidebarItem icon={<IoShirtOutline size={20} />} title="Products" href="/" />
-          <SidebarItem icon={<IoTicketOutline size={20} />} title="Orders" href="/" />
+          <SidebarItem icon={<IoTicketOutline size={20} />} title="Orders" href="/orders" />
           <SidebarItem icon={<IoPeopleOutline size={20} />} title="Clients" href="/" />
         </div>
       </nav>
