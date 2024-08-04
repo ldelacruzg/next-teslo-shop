@@ -24,15 +24,15 @@ export const Sidebar = () => {
 
         <div className="flex flex-col gap-4 mt-5">
           <SidebarItem icon={<IoPersonOutline size={20} />} title="Profile" href="/" />
-          <SidebarItem icon={<IoTicketOutline size={20} />} title="Orders" href="/" />
-          <SidebarItem icon={<IoLogInOutline size={20} />} title="Login" href="/" />
+          <SidebarItem icon={<IoTicketOutline size={20} />} title="Orders" href="/orders" />
+          <SidebarItem icon={<IoLogInOutline size={20} />} title="Login" href="/auth/login" />
           <SidebarItem icon={<IoLogOutOutline size={20} />} title="Logout" href="/" />
 
           <div className="w-full h-px bg-gray-200 my-5" />
 
           <SidebarItem icon={<IoShirtOutline size={20} />} title="Products" href="/" />
           <SidebarItem icon={<IoTicketOutline size={20} />} title="Orders" href="/orders" />
-          <SidebarItem icon={<IoPeopleOutline size={20} />} title="Clients" href="/" />
+          <SidebarItem icon={<IoPeopleOutline size={20} />} title="Clients" href="/clients" />
         </div>
       </nav>
     </div>
