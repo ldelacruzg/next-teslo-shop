@@ -24,7 +24,13 @@
     pnpx prisma generate (optional)
     ```
 
-6. Ejecutar el proyecto
+6. Ejecutar el seed para poblar la base de datos
+
+    ```bash
+    pnpx prisma db seed
+    ```
+
+7. Ejecutar el proyecto
 
     ```bash
     pnpm dev
