@@ -9,15 +9,14 @@ interface Props {
   }
 }
 
-const categories = ['men', 'women', 'kid']
-const products = initialData.products;
+const { genders, products } = initialData;
 
 export default function CategoryPage({ params }: Props) {
   const { id } = params
 
-  // if (!categories.includes(id)) {
-  //   notFound()
-  // }
+  if (!genders.includes(id)) {
+    notFound()
+  }
 
   const filteredProducts = products.filter(p => p.gender === id)
 
