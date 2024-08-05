@@ -17,7 +17,14 @@
     docker compose up -d
     ```
 
-5. Ejecutar el proyecto
+5. Generar las migraciones
+
+    ```bash
+    pnpx prisma migrate dev
+    pnpx prisma generate (optional)
+    ```
+
+6. Ejecutar el proyecto
 
     ```bash
     pnpm dev
