@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { CartItem, OrderSummary, Title } from "@/components";
 import { initialData } from "@/seed/seed";
 
-const products = initialData.products.slice(0, 3)
+const products = initialData.products.slice(0, 3).map(p => ({ ...p, id: p.slug }))
 
 export default function CartPage() {
 

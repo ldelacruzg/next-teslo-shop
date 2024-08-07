@@ -2,7 +2,7 @@ import { CartStaticItem, DeliveryAddress, OrderSummary, Title } from "@/componen
 import { initialData } from "@/seed/seed";
 import { IoCardOutline } from "react-icons/io5";
 
-const products = initialData.products.slice(0, 3)
+const products = initialData.products.slice(0, 3).map(p => ({ ...p, id: p.slug }))
 
 interface Props {
   params: {
