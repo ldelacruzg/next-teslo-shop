@@ -4,6 +4,7 @@ import Link from "next/link"
 import { IoChevronBackOutline, IoChevronForwardOutline } from "react-icons/io5";
 import { usePathname, useSearchParams } from "next/navigation";
 import { generatePaginationNumbers } from "@/utils";
+import { PaginationNumber } from "./PaginationNumber";
 
 interface Props {
   totalPages: number;
@@ -28,24 +29,6 @@ export const Pagination = ({ totalPages }: Props) => {
     return `${pathname}?${params.toString()}`
   }
 
-  const buildPaginationNumber = (pageNumber: number | string) => {
-    const isCurrentPage = pageNumber === currentPage
-    const activeClass = isCurrentPage
-      ? 'bg-blue-600 text-white hover:text-white hover:bg-blue-600 shadow-md focus:shadow-md'
-      : 'bg-transparent text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none'
-
-    return (
-      <li key={pageNumber} className={`page-item`}>
-        <Link
-          className={`page-link relative block py-1.5 px-3 border-0 outline-none transition-all duration-300 rounded ${activeClass}`}
-          href={createPageUrl(pageNumber)}>
-          {pageNumber}
-          <span className="visually-hidden"></span>
-        </Link>
-      </li>
-    )
-  }
-
   return (
     <div className="flex justify-center mb-20">
       <nav aria-label="Page navigation example">
@@ -58,8 +41,8 @@ export const Pagination = ({ totalPages }: Props) => {
             </Link>
           </li>
           {
-            pages.map((pageNumber) => (
-              buildPaginationNumber(pageNumber)
+            pages.map((pageNumber, i) => (
+              <PaginationNumber key={i} currentPage={currentPage} href={createPageUrl(pageNumber)} pageNumber={pageNumber} />
             ))
           }
           <li className="page-item">
