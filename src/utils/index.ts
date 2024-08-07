@@ -1,0 +1,1 @@
+export { generatePaginationNumbers } from './generate-pagination-numbers'

@@ -1,6 +1,6 @@
 import { Product } from "@/interfaces"
 import Link from "next/link";
-import { HoverImage } from "../ui/image/HoverImage";
+import { HoverImage } from "../../ui/image/HoverImage";
 
 interface Props {
   product: Product;

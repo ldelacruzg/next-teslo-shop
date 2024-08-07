@@ -1,9 +1,9 @@
 "use client";
 
-import { titleFont } from "@/config/fonts"
-import { useUiStore } from "@/store/ui/ui.store";
 import Link from "next/link"
 import { IoCartOutline, IoSearch } from "react-icons/io5"
+import { titleFont } from "@/config/fonts"
+import { useUiStore } from "@/store/ui/ui.store";
 
 export const TopMenu = () => {
   const toggleSideMenu = useUiStore(state => state.toggleSideMenu)
@@ -20,9 +20,9 @@ export const TopMenu = () => {
 
       {/* Categories */}
       <div className="hidden sm:flex sm:gap-2">
-        <Link href={'/category/men'} className="p-2 rounded transition-all hover:bg-gray-100">Men</Link>
-        <Link href={'/category/women'} className="p-2 rounded transition-all hover:bg-gray-100">Woman</Link>
-        <Link href={'/category/kid'} className="p-2 rounded transition-all hover:bg-gray-100">Kids</Link>
+        <Link href={'/gender/men'} className="p-2 rounded transition-all hover:bg-gray-100">Men</Link>
+        <Link href={'/gender/women'} className="p-2 rounded transition-all hover:bg-gray-100">Woman</Link>
+        <Link href={'/gender/kid'} className="p-2 rounded transition-all hover:bg-gray-100">Kids</Link>
       </div>
 
       {/* Search, cart, menu */}
