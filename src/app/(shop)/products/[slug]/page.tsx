@@ -1,5 +1,8 @@
-import { ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelector } from "@/components";
-import { initialData } from "@/seed/seed";
+export const revalidate = 604800 // 7 días
+
+import { Suspense } from "react";
+import { getProductBySlug } from "@/actions";
+import { ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelector, StockLabel, StockLabelSkeleton } from "@/components";
 import { notFound } from "next/navigation";
 
 interface Props {
@@ -8,11 +11,9 @@ interface Props {
   }
 }
 
-const products = initialData.products;
-
-export default function ProductPage({ params }: Props) {
+export default async function ProductPage({ params }: Props) {
   const { slug } = params
-  const product = products.find(p => p.slug === slug)
+  const product = await getProductBySlug(slug)
 
   if (!product) notFound()
 
@@ -26,6 +27,10 @@ export default function ProductPage({ params }: Props) {
         <ProductSlideshow className="hidden sm:block" images={product.images} title={product.title} />
       </div>
       <div className="flex flex-col gap-6 p-2">
+        <Suspense fallback={<StockLabelSkeleton />}>
+          <StockLabel slug={product.slug} />
+        </Suspense>
+
         <div className="flex flex-col">
           <h1 className={`text-xl font-semibold sm:text-3xl`}>{product.title}</h1>
           <span className="font-semibold">{product.price} €</span>
