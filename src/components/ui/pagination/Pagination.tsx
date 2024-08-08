@@ -8,12 +8,12 @@ import { PaginationNumber } from "./PaginationNumber";
 
 interface Props {
   totalPages: number;
+  currentPage: number;
 }
 
-export const Pagination = ({ totalPages }: Props) => {
+export const Pagination = ({ totalPages, currentPage }: Props) => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
-  const currentPage = Number(searchParams.get('page')) || 1
   const pages = generatePaginationNumbers(totalPages, currentPage)
 
   const createPageUrl = (pageNumber: number | string) => {

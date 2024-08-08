@@ -1,3 +1,5 @@
+"use client";
+
 import { Product } from "@/interfaces"
 import Link from "next/link";
 import { HoverImage } from "../../ui/image/HoverImage";
@@ -13,6 +15,7 @@ export const ProductGridItem = ({ product }: Props) => {
         <HoverImage
           image={`/products/${product.images.at(0)}`}
           hoverImage={`/products/${product.images.at(1)}`}
+          alt={product.title}
         />
       </Link>
       <Link

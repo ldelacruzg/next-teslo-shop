@@ -15,13 +15,13 @@ export default async function HomePage({ searchParams }: Props) {
   if (isPageInvalid) redirect('/')
 
   const page = Number(searchParams.page) || 1
-  const { products, totalPages } = await getPaginatedProductsWithImages({ page })
+  const { products, totalPages, currentPage } = await getPaginatedProductsWithImages({ page })
   if (products.length <= 0) redirect('/') //! Posiblemente un bucle infinito
 
   return (
     <>
       <Title title="ALL PRODUCTS" subtitle="Best Sellers" />
-      <Pagination totalPages={totalPages} />
+      <Pagination totalPages={totalPages} currentPage={currentPage} />
       <ProductGrid products={products} />
     </>
   );

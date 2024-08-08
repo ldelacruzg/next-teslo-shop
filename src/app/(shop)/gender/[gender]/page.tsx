@@ -27,13 +27,13 @@ export default async function CategoryPage({ params, searchParams }: Props) {
   if (isPageInvalid) redirect('/')
 
   const page = Number(searchParams.page) || 1
-  const { products, totalPages } = await getPaginatedProductsWithImages({ gender, page })
+  const { products, totalPages, currentPage } = await getPaginatedProductsWithImages({ gender, page })
   if (products.length <= 0) redirect('/') //! Posiblemente un bucle infinito
 
   return (
     <>
       <Title title={gender.toUpperCase()} subtitle="All products" />
-      <Pagination totalPages={totalPages} />
+      <Pagination totalPages={totalPages} currentPage={currentPage} />
       <ProductGrid products={products} />
     </>
   );
