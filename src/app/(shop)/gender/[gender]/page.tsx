@@ -4,6 +4,7 @@ import { getPaginatedProductsWithImages } from "@/actions/product/product-pagina
 import { Pagination, ProductGrid, Title } from "@/components";
 import { Gender } from "@/interfaces";
 import { initialData } from "@/seed/seed";
+import { Metadata, ResolvingMetadata } from "next";
 import { notFound, redirect } from "next/navigation";
 
 interface Props {
@@ -12,6 +13,22 @@ interface Props {
   },
   searchParams: {
     page?: string;
+  }
+}
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  // read route params
+  const { gender } = params
+
+  // fetch data
+  const title = gender[0].toUpperCase().concat(gender.substring(1))
+  const description = `Clothes for ${gender}`
+
+  return {
+    title, description,
+    openGraph: {
+      title, description
+    }
   }
 }
 

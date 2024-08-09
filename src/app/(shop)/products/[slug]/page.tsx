@@ -4,10 +4,31 @@ import { Suspense } from "react";
 import { getProductBySlug } from "@/actions";
 import { ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelector, StockLabel, StockLabelSkeleton } from "@/components";
 import { notFound } from "next/navigation";
+import { Metadata, ResolvingMetadata } from "next";
 
 interface Props {
   params: {
     slug: string;
+  }
+}
+
+export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+  // read route params
+  const { slug } = params
+
+  // fetch data
+  const product = await getProductBySlug(slug)
+  const title = product?.title ?? 'Product not found'
+  const description = product?.description ?? 'Product not found'
+  const images = [
+    `/products/${product?.images[1]}`
+  ]
+
+  return {
+    title, description,
+    openGraph: {
+      title, description, images
+    }
   }
 }
 
