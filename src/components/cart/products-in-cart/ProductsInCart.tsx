@@ -7,9 +7,14 @@ import { CartProdcut } from "@/interfaces"
 import { useCartStore } from "@/store"
 import { QuantitySelector } from "../quantity-selector/QuantitySelector";
 import { currencyFormat } from "@/utils";
+import { redirect } from "next/navigation";
 
 export const ProductsInCart = () => {
   const products = useCartStore(state => state.cart)
+
+  if (products.length <= 0) {
+    redirect('/empty')
+  }
 
   const changeQuantityProduct = useCartStore(state => state.changeQuantityProduct)
   const removeProductToCart = useCartStore(state => state.removeProductToCart)

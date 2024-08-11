@@ -2,11 +2,6 @@ import { OrderSummary, ProductsInCart, Title } from "@/components";
 import { Suspense } from "react";
 
 export default function CartPage() {
-
-  // if (products.length <= 0) {
-  //   redirect('/empty')
-  // }
-
   return (
     <div className="flex flex-col items-center">
       <div className="flex flex-col w-full sm:w-[640px] lg:w-[1024px]">
