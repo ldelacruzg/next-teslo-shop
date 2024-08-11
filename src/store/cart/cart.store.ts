@@ -61,8 +61,6 @@ const initializer: CartStateCreator = (set, get) => ({
     const newCart = cart.filter(
       item => item.id !== product.id || item.size !== product.size
     )
-
-    console.log({ newCart })
     set({ cart: newCart })
   }
 })
