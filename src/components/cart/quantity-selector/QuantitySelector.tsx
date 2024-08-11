@@ -1,9 +1,10 @@
 interface Props {
   qty: number;
   seletedValue?: string;
+  onValueChange: (value: number) => void;
 }
 
-export const QuantitySelector = ({ qty, seletedValue }: Props) => {
+export const QuantitySelector = ({ qty, seletedValue, onValueChange }: Props) => {
   const options = (new Array(qty)).fill(0).map((_, i) => i + 1)
 
   return (
@@ -12,10 +13,11 @@ export const QuantitySelector = ({ qty, seletedValue }: Props) => {
       <select
         className="w-10 bg-transparent transition-all ml-1"
         defaultValue={seletedValue}
+        onChange={(e) => onValueChange(Number(e.target.value))}
       >
         {
-          options.map(o => (
-            <option key={o} value={o}>{o}</option>
+          options.map(option => (
+            <option key={option} value={option}>{option}</option>
           ))
         }
       </select>

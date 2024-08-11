@@ -2,7 +2,7 @@ export const revalidate = 604800 // 7 días
 
 import { Suspense } from "react";
 import { getProductBySlug } from "@/actions";
-import { ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelector, StockLabel, StockLabelSkeleton } from "@/components";
+import { AddToCard, ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelector, StockLabel, StockLabelSkeleton } from "@/components";
 import { notFound } from "next/navigation";
 import { Metadata, ResolvingMetadata } from "next";
 
@@ -26,8 +26,10 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 
   return {
     title, description,
+    metadataBase: new URL('https://7mzcs49c-3000.brs.devtunnels.ms'),
     openGraph: {
-      title, description, images
+      title, description,
+      images
     }
   }
 }
@@ -57,14 +59,7 @@ export default async function ProductPage({ params }: Props) {
           <span className="font-semibold">{product.price} €</span>
         </div>
 
-        <SizeSelector sizes={product.sizes} selectedSize={product.sizes[0]} />
-        <QuantitySelector />
-
-        <button
-          type="button"
-          className="px-10 py-2 bg-blue-600 text-white font-semibold lg:w-[320px] rounded text-sm hover:bg-blue-800">
-          Add cart
-        </button>
+        <AddToCard product={product} />
 
         <div className="flex flex-col gap-2">
           <h3 className="font-semibold text-sm">Description</h3>

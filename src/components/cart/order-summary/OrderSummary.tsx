@@ -1,3 +1,7 @@
+"use client";
+
+import { useCartStore } from "@/store";
+import { currencyFormat } from "@/utils";
 import Link from "next/link"
 
 interface Props {
@@ -9,6 +13,8 @@ interface Props {
 }
 
 export const OrderSummary = ({ children, link }: Props) => {
+  const { subtotal, tax, total, totalProducts } = useCartStore(state => state.getOrderSummary())
+
   return (
     <div className="flex flex-col gap-6 rounded-md lg:shadow-gray-300 lg:shadow-xl lg:p-6 lg:h-min">
       {children}
@@ -16,19 +22,19 @@ export const OrderSummary = ({ children, link }: Props) => {
         <h3 className="font-bold text-xl">Orden Summary</h3>
         <div className="flex justify-between">
           <p>No. Products</p>
-          <p>3</p>
+          <p>{totalProducts}</p>
         </div>
         <div className="flex justify-between">
           <p>Subtotal</p>
-          <p>$ 540</p>
+          <p>{currencyFormat(subtotal)}</p>
         </div>
         <div className="flex justify-between">
           <p>Tax 15%</p>
-          <p>$ 81</p>
+          <p>{currencyFormat(tax)}</p>
         </div>
         <div className="flex justify-between font-bold">
           <p>Total</p>
-          <p>$ 621</p>
+          <p>{currencyFormat(total)}</p>
         </div>
       </section>
 

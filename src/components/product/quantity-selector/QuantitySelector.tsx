@@ -1,24 +1,20 @@
-"use client";
-
-import { useState } from "react";
-
 interface Props {
-  initial?: number;
+  quantity?: number;
+  onQuantityChange: (quantity: number) => void;
 }
 
-export const QuantitySelector = ({ initial = 1 }: Props) => {
-  const [count, setCount] = useState(initial)
-  const validDecrease = count <= 1
-  const validIncrease = count >= 5
+export const QuantitySelector = ({ quantity = 1, onQuantityChange }: Props) => {
+  const validDecrease = quantity <= 1
+  const validIncrease = quantity >= 5
 
   const decrease = () => {
     if (validDecrease) return
-    setCount(count - 1)
+    onQuantityChange(quantity - 1)
   }
 
   const increase = () => {
     if (validIncrease) return
-    setCount(count + 1)
+    onQuantityChange(quantity + 1)
   }
 
   return (
@@ -32,7 +28,7 @@ export const QuantitySelector = ({ initial = 1 }: Props) => {
           onClick={decrease}>
           -
         </button>
-        <span className="rounded bg-gray-100 px-10 py-2 font-semibold">{count}</span>
+        <span className="rounded bg-gray-100 px-10 py-2 font-semibold">{quantity}</span>
         <button
           type="button"
           className={`px-4 font-semibold ${validIncrease ? 'text-gray-400' : ''}`}
