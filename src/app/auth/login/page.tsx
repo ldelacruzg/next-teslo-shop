@@ -8,13 +8,15 @@ export default function LoginPage() {
       <div className="flex flex-col">
         <label htmlFor="email">Email</label>
         <input
+          id="email"
           className="px-5 py-2 border bg-gray-200 rounded mb-5"
           type="email" />
 
-        <label htmlFor="email">Password</label>
+        <label htmlFor="password">Password</label>
         <input
+          id="password"
           className="px-5 py-2 border bg-gray-200 rounded mb-5"
-          type="email" />
+          type="password" />
 
         <button
           className="btn-primary">
