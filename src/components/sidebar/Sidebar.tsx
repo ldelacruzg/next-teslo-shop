@@ -8,6 +8,9 @@ export const Sidebar = () => {
   const isSideMenuOpen = useUiStore(state => state.isSideMenuOpen)
   const toggleSideMenu = useUiStore(state => state.toggleSideMenu)
 
+  // const isSideMenuOpen = useStore(useUiStore, state => state.isSideMenuOpen)
+  // const toggleSideMenu = useStore(useUiStore, state => state.toggleSideMenu)  
+
   return (
     <div>
       {isSideMenuOpen && <div className="bg-black fixed top-0 left-0 w-screen h-screen z-10 opacity-30" />}

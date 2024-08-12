@@ -1,5 +1,4 @@
 import { OrderSummary, ProductsInCart, Title } from "@/components";
-import { Suspense } from "react";
 
 export default function CartPage() {
   return (
@@ -7,9 +6,7 @@ export default function CartPage() {
       <div className="flex flex-col w-full sm:w-[640px] lg:w-[1024px]">
         <Title title="CART" subtitle="Products to buy" />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-10">
-          <Suspense fallback={<p>Loading...</p>}>
-            <ProductsInCart />
-          </Suspense>
+          <ProductsInCart />
           <hr className="my-4 bg-gray-600 lg:hidden" />
           <OrderSummary link={{ title: 'Checkout', href: '/checkout/address' }} />
         </div>

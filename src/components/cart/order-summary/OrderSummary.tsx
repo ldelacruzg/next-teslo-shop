@@ -1,8 +1,10 @@
 "use client";
 
+import { useHydrated } from "@/hook/useHydrated";
 import { useCartStore } from "@/store";
 import { currencyFormat } from "@/utils";
 import Link from "next/link"
+import { OrderSummarySkeleton } from "./OrderSummarySkeleton";
 
 interface Props {
   children?: React.ReactNode;
@@ -13,7 +15,12 @@ interface Props {
 }
 
 export const OrderSummary = ({ children, link }: Props) => {
+  const { isHydrated } = useHydrated()
   const { subtotal, tax, total, totalProducts } = useCartStore(state => state.getOrderSummary())
+
+  if (!isHydrated) {
+    return <OrderSummarySkeleton />
+  }
 
   return (
     <div className="flex flex-col gap-6 rounded-md lg:shadow-gray-300 lg:shadow-xl lg:p-6 lg:h-min">
