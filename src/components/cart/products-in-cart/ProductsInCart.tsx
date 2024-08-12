@@ -7,12 +7,20 @@ import { CartProdcut } from "@/interfaces"
 import { useCartStore } from "@/store"
 import { QuantitySelector } from "../quantity-selector/QuantitySelector";
 import { currencyFormat } from "@/utils";
+import { useHydrated } from "@/hook/useHydrated";
+import { ProductsInCartSkeleton } from "./ProductsInCartSkeleton";
 
 export const ProductsInCart = () => {
+  const { isHydrated } = useHydrated()
   const products = useCartStore(state => state.cart)
-
   const changeQuantityProduct = useCartStore(state => state.changeQuantityProduct)
   const removeProductToCart = useCartStore(state => state.removeProductToCart)
+
+  if (!isHydrated) {
+    return (
+      <ProductsInCartSkeleton />
+    )
+  }
 
   const onQuantityChange = (product: CartProdcut, value: number) => {
     if (value <= 0 || value > 5) return changeQuantityProduct(product, 1)

@@ -5,15 +5,12 @@ import { IoCartOutline, IoSearch } from "react-icons/io5"
 import { titleFont } from "@/config/fonts"
 import { useUiStore } from "@/store/ui/ui.store";
 import { useCartStore } from "@/store";
-import { useEffect } from "react";
+import { useHydrated } from "@/hook/useHydrated";
 
 export const TopMenu = () => {
-  const toggleSideMenu = useUiStore(state => state.toggleSideMenu)
+  const { isHydrated } = useHydrated()
   const totalItems = useCartStore(state => state.getTotalItems())
-
-  useEffect(() => {
-    useCartStore.persist.rehydrate()
-  }, [])
+  const toggleSideMenu = useUiStore(state => state.toggleSideMenu)
 
   return (
     <nav className="flex justify-between items-center w-full py-2">
@@ -37,13 +34,9 @@ export const TopMenu = () => {
         <Link href={'/search'}><IoSearch size={24} /></Link>
         <Link href={'/cart'}>
           <div className="relative">
-            {
-              totalItems > 0 && (
-                <span className="absolute text-xs rounded-full bg-blue-700 font-bold px-1 -top-1 -right-1 text-white">
-                  {totalItems}
-                </span>
-              )
-            }
+            <span className="absolute text-xs rounded-full bg-blue-700 font-bold px-1 -top-1 -right-1 text-white">
+              {isHydrated ? totalItems : ''}
+            </span>
             <IoCartOutline size={24} />
           </div>
         </Link>

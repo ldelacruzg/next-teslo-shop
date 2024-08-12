@@ -71,7 +71,7 @@ export const useCartStore = create<CartStore>()(
   devtools(
     persist(
       initializer,
-      { name: 'shopping-cart', skipHydration: true }
+      { name: 'shopping-cart' }
     ),
     { name: 'shopping-cart' }
   )

@@ -2,7 +2,7 @@ export const revalidate = 604800 // 7 días
 
 import { Suspense } from "react";
 import { getProductBySlug } from "@/actions";
-import { AddToCard, ProductMobileSlideshow, ProductSlideshow, QuantitySelector, SizeSelector, StockLabel, StockLabelSkeleton } from "@/components";
+import { AddToCard, ProductMobileSlideshow, ProductSlideshow, StockLabel, StockLabelSkeleton } from "@/components";
 import { notFound } from "next/navigation";
 import { Metadata, ResolvingMetadata } from "next";
 
