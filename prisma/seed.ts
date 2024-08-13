@@ -4,12 +4,19 @@ import { initialData } from './data'
 const prisma = new PrismaClient()
 
 async function main() {
+  await prisma.user.deleteMany()
   await prisma.productImage.deleteMany()
   await prisma.product.deleteMany()
   await prisma.category.deleteMany()
 
-  const { products } = initialData
+  const { products, users } = initialData
 
+  // Add users
+  await prisma.user.createMany({
+    data: users
+  })
+
+  // Add products and categories
   for (const p of products) {
     const { images, type: categoryName, ...product } = p
 

@@ -3,13 +3,11 @@
 import { IoCloseOutline, IoSearchOutline, IoPersonOutline, IoTicketOutline, IoLogInOutline, IoLogOutOutline, IoShirtOutline, IoPeopleOutline } from "react-icons/io5"
 import { SidebarItem } from "./SidebarItem"
 import { useUiStore } from "@/store/ui/ui.store";
+import { logout } from "@/actions";
 
 export const Sidebar = () => {
   const isSideMenuOpen = useUiStore(state => state.isSideMenuOpen)
   const toggleSideMenu = useUiStore(state => state.toggleSideMenu)
-
-  // const isSideMenuOpen = useStore(useUiStore, state => state.isSideMenuOpen)
-  // const toggleSideMenu = useStore(useUiStore, state => state.toggleSideMenu)  
 
   return (
     <div>
@@ -26,16 +24,16 @@ export const Sidebar = () => {
         </div>
 
         <div className="flex flex-col gap-4 mt-5">
-          <SidebarItem icon={<IoPersonOutline size={20} />} title="Profile" href="/" />
-          <SidebarItem icon={<IoTicketOutline size={20} />} title="Orders" href="/orders" />
-          <SidebarItem icon={<IoLogInOutline size={20} />} title="Login" href="/auth/login" />
-          <SidebarItem icon={<IoLogOutOutline size={20} />} title="Logout" href="/" />
+          <SidebarItem icon={<IoPersonOutline size={20} />} title="Profile" href="/profile" onClick={toggleSideMenu} />
+          <SidebarItem icon={<IoTicketOutline size={20} />} title="Orders" href="/orders" onClick={toggleSideMenu} />
+          <SidebarItem icon={<IoLogInOutline size={20} />} title="Login" href="/auth/login" onClick={toggleSideMenu} />
+          <SidebarItem icon={<IoLogOutOutline size={20} />} title="Logout" href="/" onClick={() => { toggleSideMenu(); logout(); }} />
 
           <div className="w-full h-px bg-gray-200 my-5" />
 
-          <SidebarItem icon={<IoShirtOutline size={20} />} title="Products" href="/" />
-          <SidebarItem icon={<IoTicketOutline size={20} />} title="Orders" href="/orders" />
-          <SidebarItem icon={<IoPeopleOutline size={20} />} title="Clients" href="/clients" />
+          <SidebarItem icon={<IoShirtOutline size={20} />} title="Products" href="/" onClick={toggleSideMenu} />
+          <SidebarItem icon={<IoTicketOutline size={20} />} title="Orders" href="/orders" onClick={toggleSideMenu} />
+          <SidebarItem icon={<IoPeopleOutline size={20} />} title="Clients" href="/clients" onClick={toggleSideMenu} />
         </div>
       </nav>
     </div>

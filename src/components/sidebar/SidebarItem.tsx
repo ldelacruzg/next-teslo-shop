@@ -5,11 +5,12 @@ interface Props {
   title: string;
   href: string;
   className?: string;
+  onClick?: React.MouseEventHandler<HTMLAnchorElement> | undefined
 }
 
-export const SidebarItem = ({ className, href, icon, title }: Props) => {
+export const SidebarItem = ({ className, href, icon, title, onClick }: Props) => {
   return (
-    <Link href={href} className={`flex gap-3 items-center hover:bg-gray-100 p-2 rounded transition-all ${className ?? ''}`}>
+    <Link onClick={onClick} href={href} className={`flex gap-3 items-center hover:bg-gray-100 p-2 rounded transition-all ${className ?? ''}`}>
       {icon}
       <span className="text-sm font-semibold">{title}</span>
     </Link>
