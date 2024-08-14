@@ -1,22 +1,21 @@
 "use client";
 
-import Link from "next/link"
-import { useFormState, useFormStatus } from "react-dom";
-import { authenticate } from "@/actions";
-import { IoInformationCircleOutline } from "react-icons/io5";
-import clsx from "clsx";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useFormState, useFormStatus } from "react-dom";
+import { IoInformationCircleOutline } from "react-icons/io5";
+import Link from "next/link"
+import clsx from "clsx";
+
+import { authenticate } from "@/actions";
 
 export const LoginForm = () => {
   const [state, dispatch] = useFormState(authenticate, undefined)
-  const router = useRouter()
 
   useEffect(() => {
     if (state === 'LoginSuccess') {
-      router.replace('/')
+      window.location.replace('/')
     }
-  }, [state, router])
+  }, [state])
 
   return (
     <form action={dispatch} className="flex flex-col">
