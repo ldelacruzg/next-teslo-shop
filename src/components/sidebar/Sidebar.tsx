@@ -1,9 +1,16 @@
 "use client";
 
-import { useSession } from "next-auth/react";
-import { IoCloseOutline, IoSearchOutline, IoPersonOutline, IoTicketOutline, IoLogInOutline, IoLogOutOutline, IoShirtOutline, IoPeopleOutline } from "react-icons/io5"
-
-import { logout } from "@/actions";
+import { signOut, useSession } from "next-auth/react";
+import {
+  IoCloseOutline,
+  IoSearchOutline,
+  IoPersonOutline,
+  IoTicketOutline,
+  IoLogInOutline,
+  IoLogOutOutline,
+  IoShirtOutline,
+  IoPeopleOutline
+} from "react-icons/io5"
 import { useUiStore } from "@/store/ui/ui.store";
 import { SidebarItem } from "./SidebarItem"
 
@@ -15,9 +22,8 @@ export const Sidebar = () => {
   const isAdmin = session?.user.role === 'admin'
 
   const onLogout = async () => {
-    await logout()
     toggleSideMenu()
-    window.location.replace('/')
+    signOut()
   }
 
   return (

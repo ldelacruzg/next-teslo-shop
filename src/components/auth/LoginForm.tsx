@@ -8,14 +8,18 @@ import clsx from "clsx";
 
 import { authenticate } from "@/actions";
 
-export const LoginForm = () => {
+interface Props {
+  redirectTo?: string;
+}
+
+export const LoginForm = ({ redirectTo }: Props) => {
   const [state, dispatch] = useFormState(authenticate, undefined)
 
   useEffect(() => {
     if (state === 'LoginSuccess') {
-      window.location.replace('/')
+      window.location.replace(redirectTo ?? '/')
     }
-  }, [state])
+  }, [state, redirectTo])
 
   return (
     <form action={dispatch} className="flex flex-col">

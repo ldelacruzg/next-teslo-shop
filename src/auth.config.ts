@@ -1,10 +1,16 @@
 import NextAuth, { type NextAuthConfig } from 'next-auth';
 import credentials from 'next-auth/providers/credentials';
 import { z } from 'zod';
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import prisma from './lib/prisma';
 
+const protectedRoutes = [
+  '/checkout',
+  '/checkout/address'
+]
+
 export const authConfig: NextAuthConfig = {
+  trustHost: true,
   pages: {
     signIn: '/auth/login',
     newUser: '/auth/register'
@@ -19,7 +25,17 @@ export const authConfig: NextAuthConfig = {
     session: ({ session, token, user }) => {
       session.user = token.data as any
       return session
-    }
+    },
+    authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user
+      const currentPath = nextUrl.pathname
+      const isOnProtectedRoute = protectedRoutes.includes(currentPath)
+      if (isOnProtectedRoute) {
+        if (isLoggedIn) return true
+        return Response.redirect(new URL(`/auth/login?redirectTo=${currentPath}`, nextUrl))
+      }
+      return true
+    },
   },
   providers: [
     credentials({
