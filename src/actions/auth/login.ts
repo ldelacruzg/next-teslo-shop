@@ -26,3 +26,16 @@ export async function authenticate(prevState: string | undefined, formData: Form
     return 'Unknown Error'
   }
 }
+
+export const login = async (email: string, password: string) => {
+  try {
+    await signIn('credentials', {
+      email, password,
+      redirect: false
+    })
+
+    return { ok: true }
+  } catch (error) {
+    return { ok: false }
+  }
+}
