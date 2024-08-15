@@ -87,3 +87,10 @@ model User {
 
   @@map("users")
 }
+
+model Country {
+  id   String @id
+  name String @unique
+
+  @@map("countries")
+}

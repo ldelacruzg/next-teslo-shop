@@ -8,8 +8,14 @@ async function main() {
   await prisma.productImage.deleteMany()
   await prisma.product.deleteMany()
   await prisma.category.deleteMany()
+  await prisma.country.deleteMany()
 
-  const { products, users } = initialData
+  const { products, users, countries } = initialData
+
+  // Add countries
+  await prisma.country.createMany({
+    data: countries
+  })
 
   // Add users
   await prisma.user.createMany({
