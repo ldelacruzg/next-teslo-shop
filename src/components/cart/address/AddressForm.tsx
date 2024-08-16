@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Country } from "@/interfaces";
+import { Address, Country } from "@/interfaces";
 import { useAddressStore } from "@/store";
 import { useEffect } from "react";
 import { deleteUserAddress, setUserAddress } from "@/actions";
@@ -22,18 +22,28 @@ interface AddressFormInputs {
 }
 
 interface Props {
-  countries: Country[]
+  countries: Country[];
+  initialUserAddress: Partial<Address> | null;
 }
 
-export const AddressForm = ({ countries }: Props) => {
+export const AddressForm = ({ countries, initialUserAddress }: Props) => {
+  const router = useRouter()
+  const { data: session } = useSession()
+
   const setAddress = useAddressStore(state => state.setAddress)
   const userAddress = useAddressStore(state => state.address)
-  const { register, handleSubmit, reset, formState: { isValid } } = useForm<AddressFormInputs>()
-  const { data: session } = useSession()
-  const router = useRouter()
+
+  const { register, handleSubmit, reset, formState: { isValid } } = useForm<AddressFormInputs>({
+    defaultValues: {
+      ...initialUserAddress,
+      rememberAddress: initialUserAddress !== null
+    }
+  })
 
   useEffect(() => {
-    reset(userAddress)
+    if (userAddress.names) {
+      reset(userAddress)
+    }
   }, [reset, userAddress])
 
   const onSubmit: SubmitHandler<AddressFormInputs> = async (data) => {
@@ -47,7 +57,7 @@ export const AddressForm = ({ countries }: Props) => {
       await deleteUserAddress(session?.user.id!)
     }
 
-    //router.replace('/checkout')
+    router.replace('/checkout')
   }
 
   return (
