@@ -37,8 +37,8 @@ export const useAddressStore = create<AddressStore>()(
   devtools(
     persist(
       initializer,
-      { name: 'delivery-address' }
+      { name: 'user-address' }
     ),
-    { name: 'delivery-address' }
+    { name: 'user-address' }
   )
 )
