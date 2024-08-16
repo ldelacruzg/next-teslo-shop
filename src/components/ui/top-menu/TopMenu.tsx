@@ -34,9 +34,13 @@ export const TopMenu = () => {
         <Link href={'/search'}><IoSearch size={24} /></Link>
         <Link href={'/cart'}>
           <div className="relative">
-            <span className="absolute text-xs rounded-full bg-blue-700 font-bold px-1 -top-1 -right-1 text-white">
-              {isHydrated ? totalItems : ''}
-            </span>
+            {
+              isHydrated && totalItems > 0 && (
+                <span className="absolute text-xs rounded-full bg-blue-700 font-bold px-1 -top-1 -right-1 text-white">
+                  {totalItems}
+                </span>
+              )
+            }
             <IoCartOutline size={24} />
           </div>
         </Link>

@@ -9,6 +9,7 @@ import { QuantitySelector } from "../quantity-selector/QuantitySelector";
 import { currencyFormat } from "@/utils";
 import { useHydrated } from "@/hook/useHydrated";
 import { ProductsInCartSkeleton } from "./ProductsInCartSkeleton";
+import { redirect } from "next/navigation";
 
 export const ProductsInCart = () => {
   const { isHydrated } = useHydrated()
@@ -20,6 +21,10 @@ export const ProductsInCart = () => {
     return (
       <ProductsInCartSkeleton />
     )
+  }
+
+  if (products.length <= 0) {
+    redirect('/empty')
   }
 
   const onQuantityChange = (product: CartProdcut, value: number) => {
