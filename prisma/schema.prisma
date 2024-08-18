@@ -60,6 +60,7 @@ model Product {
   category      Category       @relation(fields: [categoryId], references: [id])
   categoryId    String         @map("category_id")
   productImages ProductImage[]
+  orderItem     OrderItem[]
 
   @@index([gender])
   @@map("products")
@@ -87,6 +88,7 @@ model User {
 
   // Relations
   address UserAddress?
+  orders  Order[]
 
   @@map("users")
 }
@@ -115,7 +117,64 @@ model Country {
   name String @unique
 
   // Relations
-  addresses UserAddress[]
+  addresses      UserAddress[]
+  orderAddresses OrderAddress[]
 
   @@map("countries")
+}
+
+// User 1:M Orders 1:M Items
+// Order 1:1 Address
+model Order {
+  id         String    @id @default(uuid())
+  countItems Int       @map("count_items")
+  subtotal   Float
+  tax        Float
+  total      Float
+  isPaid     Boolean   @map("is_paid")
+  paidAt     DateTime? @map("paid_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  user         User          @relation(fields: [userId], references: [id])
+  userId       String        @map("user_id")
+  items        OrderItem[]
+  orderAddress OrderAddress?
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id       String @id @default(uuid())
+  quantity Int
+  price    Float
+  size     Size
+
+  // Relations
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String  @map("order_id")
+  product   Product @relation(fields: [productId], references: [id])
+  productId String  @map("product_id")
+
+  @@map("order_items")
+}
+
+model OrderAddress {
+  id          String  @id @default(uuid())
+  names       String
+  lastName    String  @map("lastname")
+  address     String
+  address2    String?
+  postalCode  String  @map("postal_code")
+  city        String
+  phoneNumber String  @map("phone_number")
+
+  // Relations
+  country   Country @relation(fields: [countryId], references: [id])
+  countryId String  @map("country_id")
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String  @unique @map("order_id")
+
+  @@map("order_addresses")
 }
