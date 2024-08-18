@@ -1,7 +1,4 @@
-import { DeliveryAddress, OrderSummary, ProductsInCartSummary, Title } from "@/components";
-import { initialData } from "@/seed/seed";
-
-const products = initialData.products.slice(0, 3).map(p => ({ ...p, id: p.slug }))
+import { OrderSummary, ProductsInCartSummary, Title } from "@/components";
 
 export default function CheckoutPage() {
   return (
@@ -11,9 +8,7 @@ export default function CheckoutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-10">
           <ProductsInCartSummary />
           <hr className="my-4 bg-gray-600 lg:hidden" />
-          <OrderSummary link={{ title: "Pre-order", href: "/orders/abc" }}>
-            <DeliveryAddress />
-          </OrderSummary>
+          <OrderSummary link={{ title: "Pre-order", href: "/orders/abc" }} />
         </div>
       </div>
     </div>

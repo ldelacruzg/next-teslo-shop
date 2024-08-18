@@ -1,30 +1,57 @@
 "use client";
 
 import { useHydrated } from "@/hook/useHydrated";
-import { useCartStore } from "@/store";
+import { useAddressStore, useCartStore } from "@/store";
 import { currencyFormat } from "@/utils";
-import Link from "next/link"
 import { OrderSummarySkeleton } from "./OrderSummarySkeleton";
+import { useState } from "react";
+import clsx from "clsx";
+import { useSession } from "next-auth/react";
 
 interface Props {
-  children?: React.ReactNode;
   link?: {
     title: string;
     href: string;
-  }
+  },
 }
 
-export const OrderSummary = ({ children, link }: Props) => {
+export const OrderSummary = ({ link }: Props) => {
   const { isHydrated } = useHydrated()
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false)
   const { subtotal, tax, total, totalProducts } = useCartStore(state => state.getOrderSummary())
+  const address = useAddressStore(state => state.address)
+  const products = useCartStore(state => state.cart)
+  const { data: session } = useSession()
 
   if (!isHydrated) {
     return <OrderSummarySkeleton />
   }
 
+  const onPreOrder = async () => {
+    setIsPlacingOrder(true)
+
+    const productToOrder = products.map(({ id, quantity, size }) => ({ id, quantity, size }))
+    console.log({ productToOrder })
+
+    await new Promise((resolver) => setTimeout(resolver, 1000))
+
+    setIsPlacingOrder(false)
+  }
+
   return (
     <div className="flex flex-col gap-6 rounded-md lg:shadow-gray-300 lg:shadow-xl lg:p-6 lg:h-min">
-      {children}
+      <section className="flex flex-col gap-2 font-light">
+        <h3 className="font-bold text-xl">Delivery Address</h3>
+        <div className="flex flex-col justify-between gap-2">
+          <p><span className="font-semibold">Full Name:</span> {address.names} {address.lastName}</p>
+          <p><span className="font-semibold">Address 1:</span> {address.address}</p>
+          <p><span className="font-semibold">Address 2:</span> {address.address2 !== '' ? address.address2 : "N/A"}</p>
+          <p><span className="font-semibold">Postal Code:</span> {address.postalCode}</p>
+          <p><span className="font-semibold">City:</span> {address.city}</p>
+          <p><span className="font-semibold">Phone Number:</span> {address.phoneNumber}</p>
+        </div>
+      </section>
+
       <section className="flex flex-col font-light gap-2">
         <h3 className="font-bold text-xl">Orden Summary</h3>
         <div className="flex justify-between">
@@ -47,12 +74,16 @@ export const OrderSummary = ({ children, link }: Props) => {
 
       {
         link && (
-          <Link
-            href={link.href}
+          <button
             type="button"
-            className="bg-blue-600 text-white text-center font-bold py-2 rounded mt-6">
+            onClick={onPreOrder}
+            disabled={isPlacingOrder}
+            className={clsx({
+              "btn-primary": !isPlacingOrder,
+              "btn-disabled": isPlacingOrder
+            })}>
             {link.title}
-          </Link>
+          </button>
         )
       }
     </div>

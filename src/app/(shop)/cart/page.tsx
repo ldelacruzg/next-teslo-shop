@@ -1,4 +1,4 @@
-import { OrderSummary, ProductsInCart, Title } from "@/components";
+import { CartSummary, ProductsInCart, Title } from "@/components";
 
 export default function CartPage() {
   return (
@@ -8,7 +8,7 @@ export default function CartPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-10">
           <ProductsInCart />
           <hr className="my-4 bg-gray-600 lg:hidden" />
-          <OrderSummary link={{ title: 'Checkout', href: '/checkout/address' }} />
+          <CartSummary />
         </div>
       </div>
     </div>

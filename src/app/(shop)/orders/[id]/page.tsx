@@ -1,4 +1,4 @@
-import { DeliveryAddress, OrderSummary, ProductsInCartSummary, Title } from "@/components";
+import { OrderSummary, ProductsInCartSummary, Title } from "@/components";
 import { IoCardOutline } from "react-icons/io5";
 
 interface Props {
@@ -21,9 +21,7 @@ export default function OrderPage({ params }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-10">
           <ProductsInCartSummary />
           <hr className="my-4 bg-gray-600 lg:hidden" />
-          <OrderSummary>
-            <DeliveryAddress />
-          </OrderSummary>
+          <OrderSummary />
         </div>
       </div>
     </div>
