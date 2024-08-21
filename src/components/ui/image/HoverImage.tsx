@@ -14,7 +14,8 @@ export const HoverImage = ({ hoverImage, image, alt }: Props) => {
 
   return (
     <Image
-      priority
+      placeholder="blur"
+      blurDataURL={currentImage}
       onMouseEnter={() => setcurrentImage(hoverImage)}
       onMouseLeave={() => setcurrentImage(image)}
       className="fade-in transition-all"
