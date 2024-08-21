@@ -16,10 +16,12 @@ export default async function OrderPage({ params }: Props) {
   const { ok, data } = await getOrderById(orderId)
 
   if (!ok || !data) {
-    redirect('/empty')
+    redirect('/')
   }
 
-  const products: CartProdcut[] = data.items.map(prod => ({
+  const { items, orderAddress, isPaid } = data
+
+  const products: CartProdcut[] = items.map(prod => ({
     id: prod.id,
     image: prod.product.productImages[0].url,
     price: prod.price,
@@ -30,14 +32,14 @@ export default async function OrderPage({ params }: Props) {
   }))
 
   const address: Address = {
-    address: data.orderAddress!.address,
-    city: data.orderAddress!.city,
-    lastName: data.orderAddress!.lastName,
-    names: data.orderAddress!.names,
-    phoneNumber: data.orderAddress!.phoneNumber,
-    postalCode: data.orderAddress!.postalCode,
-    country: data.orderAddress?.countryId ?? '',
-    address2: data.orderAddress!.address2 ?? undefined
+    address: orderAddress!.address,
+    city: orderAddress!.city,
+    lastName: orderAddress!.lastName,
+    names: orderAddress!.names,
+    phoneNumber: orderAddress!.phoneNumber,
+    postalCode: orderAddress!.postalCode,
+    country: orderAddress?.countryId ?? '',
+    address2: orderAddress!.address2 ?? undefined
   }
 
   const orderSummary: OrderSummary = {
@@ -51,12 +53,13 @@ export default async function OrderPage({ params }: Props) {
     <div className="flex flex-col justify-center items-center">
       <div className="flex flex-col w-full sm:w-[640px] lg:w-[1024px]">
         <Title title={`ORDER #${orderId}`} subtitle="Products to buy" />
-        <div className={clsx({
-          "flex items-center gap-2 bg-red-500 p-2 text-white font-bold rounded": !data.isPaid,
-          "flex items-center gap-2 bg-green-500 p-2 text-white font-bold rounded": data.isPaid
+        <div className={clsx(
+          "flex items-center gap-2 text-white font-bold rounded", {
+          "bg-red-500 p-2": !isPaid,
+          "bg-green-500 p-2": isPaid
         })}>
           <IoCardOutline size={25} />
-          {data.isPaid ? "Paid" : "Not payed"}
+          {isPaid ? "Paid" : "Not payed"}
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-10">
           <OrderCardProducts products={products} />
