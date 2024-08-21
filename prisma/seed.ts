@@ -4,15 +4,17 @@ import { initialData } from './data'
 const prisma = new PrismaClient()
 
 async function main() {
-  await prisma.user.deleteMany()
-  await prisma.productImage.deleteMany()
-  await prisma.product.deleteMany()
-  await prisma.category.deleteMany()
-  await prisma.country.deleteMany()
-  await prisma.userAddress.deleteMany()
-  await prisma.orderAddress.deleteMany()
-  await prisma.orderItem.deleteMany()
-  await prisma.order.deleteMany()
+  await prisma.$transaction(async tx => {
+    await tx.productImage.deleteMany()
+    await tx.orderItem.deleteMany()
+    await tx.product.deleteMany()
+    await tx.userAddress.deleteMany()
+    await tx.country.deleteMany()
+    await tx.orderAddress.deleteMany()
+    await tx.order.deleteMany()
+    await tx.category.deleteMany()
+    await tx.user.deleteMany()
+  })
 
   const { products, users, countries } = initialData
 
