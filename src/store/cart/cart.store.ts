@@ -4,6 +4,7 @@ import { devtools, persist } from 'zustand/middleware';
 
 interface State {
   cart: CartProdcut[];
+  idCreatedOrder?: string;
 }
 
 interface Actions {
@@ -12,6 +13,8 @@ interface Actions {
   addProdcutToCart: (product: CartProdcut) => void;
   changeQuantityProduct: (product: CartProdcut, quantity: number) => void;
   removeProductToCart: (product: CartProdcut) => void;
+  setIdCreatedOrder: (orderId: string) => void;
+  cleanCart: () => void;
 }
 
 type CartStore = State & Actions;
@@ -62,6 +65,14 @@ const initializer: CartStateCreator = (set, get) => ({
       item => item.id !== product.id || item.size !== product.size
     )
     set({ cart: newCart })
+  },
+  setIdCreatedOrder: (orderId) => {
+    set({ idCreatedOrder: orderId })
+  },
+  cleanCart: () => {
+    if (get().idCreatedOrder) {
+      set({ cart: [], idCreatedOrder: undefined })
+    }
   }
 })
 

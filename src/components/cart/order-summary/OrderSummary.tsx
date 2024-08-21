@@ -6,7 +6,8 @@ import { currencyFormat } from "@/utils";
 import { OrderSummarySkeleton } from "./OrderSummarySkeleton";
 import { useState } from "react";
 import clsx from "clsx";
-import { useSession } from "next-auth/react";
+import { preorder } from "@/actions";
+import { useRouter } from "next/navigation";
 
 interface Props {
   link?: {
@@ -18,10 +19,14 @@ interface Props {
 export const OrderSummary = ({ link }: Props) => {
   const { isHydrated } = useHydrated()
   const [isPlacingOrder, setIsPlacingOrder] = useState(false)
+  const [saveError, setSaveError] = useState<string>()
+
   const { subtotal, tax, total, totalProducts } = useCartStore(state => state.getOrderSummary())
   const address = useAddressStore(state => state.address)
   const products = useCartStore(state => state.cart)
-  const { data: session } = useSession()
+  const cleanCart = useCartStore(state => state.cleanCart)
+
+  const router = useRouter()
 
   if (!isHydrated) {
     return <OrderSummarySkeleton />
@@ -31,11 +36,16 @@ export const OrderSummary = ({ link }: Props) => {
     setIsPlacingOrder(true)
 
     const productToOrder = products.map(({ id, quantity, size }) => ({ id, quantity, size }))
-    console.log({ productToOrder })
+    const { ok, message, data } = await preorder(productToOrder, address)
 
-    await new Promise((resolver) => setTimeout(resolver, 1000))
+    if (!ok) {
+      setIsPlacingOrder(false)
+      setSaveError(message)
+      return
+    }
 
-    setIsPlacingOrder(false)
+    cleanCart()
+    router.replace(`/orders/${data?.id}`)
   }
 
   return (
@@ -71,6 +81,12 @@ export const OrderSummary = ({ link }: Props) => {
           <p>{currencyFormat(total)}</p>
         </div>
       </section>
+
+      {
+        saveError
+          ? <p className="text-red-500">{saveError}</p>
+          : <></>
+      }
 
       {
         link && (

@@ -1,18 +1,11 @@
-"use client";
-
-import { useHydrated } from "@/hook/useHydrated";
-import { useCartStore } from "@/store"
-import { ProductsInCartSkeleton } from "./ProductsInCartSkeleton";
+import { CartProdcut } from "@/interfaces";
 import Image from "next/image";
 
-export const ProductsInCartSummary = () => {
-  const { isHydrated } = useHydrated()
-  const products = useCartStore(state => state.cart)
+interface Props {
+  products: CartProdcut[]
+}
 
-  if (!isHydrated) {
-    return <ProductsInCartSkeleton />
-  }
-
+export const OrderCardProducts = ({ products }: Props) => {
   return (
     <div className="flex flex-col gap-8 lg:col-span-2 lg:pt-8">
       {
