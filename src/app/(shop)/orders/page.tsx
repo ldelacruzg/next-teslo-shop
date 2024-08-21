@@ -13,6 +13,15 @@ export default async function OrdersPage() {
     redirect('/')
   }
 
+  if (orders && orders.length <= 0) {
+    return (
+      <>
+        <Title title="Orders" />
+        <p className='text-center'>There is not orders. <Link href={'/'} className='font-semibold hover:text-blue-500 transition-all'>See products</Link> </p>
+      </>
+    )
+  }
+
   return (
     <>
       <Title title="Orders" />
