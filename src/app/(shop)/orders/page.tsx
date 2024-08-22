@@ -1,6 +1,7 @@
 import { getOrdersByUser } from '@/actions';
 import { Title } from '@/components';
 import { currencyFormat } from '@/utils';
+import clsx from 'clsx';
 
 import Link from 'next/link';
 import { redirect } from 'next/navigation';
@@ -59,8 +60,14 @@ export default async function OrdersPage() {
                     {currencyFormat(order.total)}
                   </td>
                   <td className="flex items-center text-sm  text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                    <IoCardOutline className="text-red-800" />
-                    <span className='mx-2 text-red-800'>
+                    <IoCardOutline className={clsx({
+                      "text-red-800": !order.isPaid,
+                      "text-green-800": order.isPaid
+                    })} />
+                    <span className={clsx('mx-2', {
+                      "text-red-800": !order.isPaid,
+                      "text-green-800": order.isPaid
+                    })}>
                       {order.isPaid ? "Paid" : "Not payed"}
                     </span>
                   </td>

@@ -1,12 +1,15 @@
+import { PayPalButton } from "@/components/paypal/PayPalButton";
 import { Address, OrderSummary } from "@/interfaces"
 import { currencyFormat } from "@/utils";
 
 interface Props {
+  orderId: string;
+  isPaid: boolean;
   address: Address;
   orderSummary: OrderSummary;
 }
 
-export const Summary = ({ address, orderSummary }: Props) => {
+export const Summary = ({ address, orderSummary, orderId, isPaid }: Props) => {
   return (
     <div className="flex flex-col gap-6 rounded-md lg:shadow-gray-300 lg:shadow-xl lg:p-6 lg:h-min">
       <section className="flex flex-col gap-2 font-light">
@@ -40,6 +43,12 @@ export const Summary = ({ address, orderSummary }: Props) => {
           <p>{currencyFormat(orderSummary.total)}</p>
         </div>
       </section>
+
+      {
+        !isPaid
+          ? (<PayPalButton orderId={orderId} amount={orderSummary.total} />)
+          : <></>
+      }
     </div>
   )
 }

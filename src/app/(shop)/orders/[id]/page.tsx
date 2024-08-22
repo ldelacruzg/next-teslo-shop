@@ -64,7 +64,7 @@ export default async function OrderPage({ params }: Props) {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mb-10">
           <OrderCardProducts products={products} />
           <hr className="my-4 bg-gray-600 lg:hidden" />
-          <Summary address={address} orderSummary={orderSummary} />
+          <Summary address={address} orderSummary={orderSummary} orderId={orderId} isPaid={data.isPaid} />
         </div>
       </div>
     </div>

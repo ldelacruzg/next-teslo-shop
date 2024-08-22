@@ -142,6 +142,9 @@ model Order {
   items        OrderItem[]
   orderAddress OrderAddress?
 
+  // Paid
+  transactionId String? @map("transaction_id")
+
   @@map("orders")
 }
 
