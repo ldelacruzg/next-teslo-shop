@@ -9,6 +9,12 @@ const protectedRoutes = [
   '/checkout/address'
 ]
 
+const protectedRoutesAdmin = [
+  '/admin/products',
+  '/admin/orders',
+  '/admin/users',
+]
+
 export const authConfig: NextAuthConfig = {
   trustHost: true,
   pages: {
@@ -30,10 +36,18 @@ export const authConfig: NextAuthConfig = {
       const isLoggedIn = !!auth?.user
       const currentPath = nextUrl.pathname
       const isOnProtectedRoute = protectedRoutes.includes(currentPath)
+      const isOnProtectedRouteAdmin = protectedRoutesAdmin.includes(currentPath)
+
+      if (isOnProtectedRouteAdmin) {
+        if (isLoggedIn && auth.user.role === 'admin') return true
+        return Response.redirect(new URL('/', nextUrl))
+      }
+
       if (isOnProtectedRoute) {
         if (isLoggedIn) return true
         return Response.redirect(new URL(`/auth/login?redirectTo=${currentPath}`, nextUrl))
       }
+
       return true
     },
   },
@@ -57,8 +71,6 @@ export const authConfig: NextAuthConfig = {
 
         // return user
         const { password: _, ...rest } = user
-
-        console.log({ rest })
         return rest
       },
     }),
