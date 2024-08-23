@@ -21,3 +21,9 @@ export class PayPalOrderStatusException extends Error {
     super(message)
   }
 }
+
+export class UnauthorizedException extends Error {
+  constructor(message: string = "Unauthorized") {
+    super(message)
+  }
+}

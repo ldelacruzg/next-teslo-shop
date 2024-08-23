@@ -63,7 +63,7 @@ export const Sidebar = () => {
               <>
                 <div className="w-full h-px bg-gray-200 my-5" />
                 <SidebarItem icon={<IoShirtOutline size={20} />} title="Products" href="/" onClick={toggleSideMenu} />
-                <SidebarItem icon={<IoTicketOutline size={20} />} title="Orders" href="/orders" onClick={toggleSideMenu} />
+                <SidebarItem icon={<IoTicketOutline size={20} />} title="Orders" href="/admin/orders" onClick={toggleSideMenu} />
                 <SidebarItem icon={<IoPeopleOutline size={20} />} title="Clients" href="/clients" onClick={toggleSideMenu} />
               </>
             )
