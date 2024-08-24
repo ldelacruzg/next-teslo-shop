@@ -10,6 +10,7 @@ interface Pagination {
 }
 
 interface PaginationResult {
+  ok: boolean;
   currentPage: number;
   products: Product[];
   totalCount: number;
@@ -44,6 +45,7 @@ export const getPaginatedProductsWithImages = async ({ limit = 12, page = 1, gen
     const totalPages = Math.ceil(totalCount / limit)
 
     return {
+      ok: true,
       currentPage: page,
       products: productsAdapter,
       totalCount: totalCount,

@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation';
 import { getUsers } from '@/actions';
 import { Title, UserTable } from '@/components';
 
-export default async function AdminOrdersPage() {
+export default async function AdminUsersPage() {
   const { data: users, ok } = await getUsers()
 
   if (!ok) {

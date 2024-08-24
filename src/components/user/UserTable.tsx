@@ -32,6 +32,8 @@ export const UserTable = ({ users }: Props) => {
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{user.name}</td>
               <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                 <select
+                  name="role"
+                  id="role"
                   value={user.role}
                   onChange={async (e) => await changeUserRol(user.id, e.target.value)}
                   className='p-2 w-full'>
