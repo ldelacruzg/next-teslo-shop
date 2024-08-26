@@ -30,3 +30,4 @@ export { OrderCardProducts } from './order/order-cart-products/OrderCardProducts
 export { Summary } from './order/summary/Summary'
 export { PayPalButton } from './paypal/PayPalButton'
 export { UserTable } from './user/UserTable'
+export { ProductImage } from './product/product-image/ProductImage'

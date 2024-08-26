@@ -10,6 +10,7 @@ import { currencyFormat } from "@/utils";
 import { useHydrated } from "@/hook/useHydrated";
 import { ProductsInCartSkeleton } from "./ProductsInCartSkeleton";
 import { redirect } from "next/navigation";
+import { ProductImage } from "@/components";
 
 export const ProductsInCart = () => {
   const { isHydrated } = useHydrated()
@@ -38,7 +39,7 @@ export const ProductsInCart = () => {
         products.map(product => (
           <article key={product.slug + product.size} className="grid grid-cols-4 lg:max-w-xl">
             <div className="flex items-center justify-start">
-              <Image priority src={`/products/${product.image}`} alt={product.title} width={100} height={100} />
+              <ProductImage src={product.image} alt={product.title} width={100} height={100} />
             </div>
             <div className="flex flex-col col-span-2">
               <Link href={`/products/${product.slug}`} className="font-semibold hover:text-blue-700 transition-all">{product.title}</Link>

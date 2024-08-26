@@ -11,6 +11,7 @@ import 'swiper/css/free-mode'
 import 'swiper/css/navigation'
 import 'swiper/css/thumbs'
 import './slideshow.css'
+import { ProductImage } from '../product-image/ProductImage';
 
 interface Props {
   images: string[];
@@ -39,18 +40,24 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
         className="mySwiper2"
       >
         {
-          images.map(image => (
-            <SwiperSlide key={image}>
-              <Image
-                placeholder='blur'
-                blurDataURL={`/products/${image}`}
-                src={`/products/${image}`}
-                alt={title}
-                width={1024} height={800}
-                className='rounded object-contain'
-              />
-            </SwiperSlide>
-          ))
+          images.length > 0 ?
+            (
+              images.map(image => (
+                <SwiperSlide key={image}>
+                  <Image
+                    placeholder='blur'
+                    blurDataURL={`/products/${image}`}
+                    src={`/products/${image}`}
+                    alt={title}
+                    width={1024} height={800}
+                    className='rounded object-contain'
+                  />
+                </SwiperSlide>
+              ))
+            ) :
+            (
+              <ProductImage alt={''} width={1024} height={1024} />
+            )
         }
       </Swiper>
       <Swiper
@@ -63,18 +70,24 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
         className="mySwiper"
       >
         {
-          images.map(image => (
-            <SwiperSlide key={image}>
-              <Image
-                placeholder='blur'
-                blurDataURL={`/products/${image}`}
-                src={`/products/${image}`}
-                alt={title}
-                width={300} height={300}
-                className='rounded object-contain'
-              />
-            </SwiperSlide>
-          ))
+          images.length > 0 ?
+            (
+              images.map(image => (
+                <SwiperSlide key={image}>
+                  <Image
+                    placeholder='blur'
+                    blurDataURL={`/products/${image}`}
+                    src={`/products/${image}`}
+                    alt={title}
+                    width={300} height={300}
+                    className='rounded object-contain'
+                  />
+                </SwiperSlide>
+              ))
+            ) :
+            (
+              <ProductImage alt={''} width={300} height={300} />
+            )
         }
       </Swiper>
     </div>

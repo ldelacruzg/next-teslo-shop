@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation';
 
 import { getPaginatedProductsWithImages } from '@/actions';
-import { Pagination, Title } from '@/components';
+import { Pagination, ProductImage, Title } from '@/components';
 import { currencyFormat } from '@/utils';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -60,7 +60,12 @@ export default async function AdminProductsPage({ searchParams }: Props) {
                 <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{id.split('-').at(0)}</td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                   <Link href={`/products/${slug}`}>
-                    <Image priority className='rounded' src={`/products/${images[1]}`} alt={title} width={70} height={70} />
+                    {/* <Image priority className='rounded' src={`/products/${images[1]}`} alt={title} width={70} height={70} /> */}
+                    <ProductImage
+                      src={images[0]}
+                      alt={title}
+                      width={70} height={70}
+                      className='rounded' />
                   </Link>
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
