@@ -11,14 +11,20 @@ interface Props {
 
 export default async function AdminProductPage({ params }: Props) {
   const { slug } = params
-  const [product, categories] = await Promise.all([
-    getProductBySlug(slug),
-    getCategories()
-  ])
+  const title = slug === 'new' ? 'NEW PRODUCT' : 'EDIT PRODUCT'
+  const categories = await getCategories()
 
+  if (slug === 'new') {
+    return (
+      <>
+        <Title title={title} />
+        <ProductForm product={{}} categories={categories ?? []} />
+      </>
+    )
+  }
+
+  const product = await getProductBySlug(slug)
   if (!product) redirect('/admin/products')
-
-  const title = slug === 'new' ? 'New product' : 'Edit product'
 
   return (
     <>

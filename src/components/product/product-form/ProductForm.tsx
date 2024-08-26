@@ -6,9 +6,10 @@ import clsx from "clsx";
 import { Category, Product, ProductImage } from "@/interfaces";
 import Image from "next/image";
 import { IoTrashOutline } from "react-icons/io5";
+import { createUpdateProduct } from "@/actions";
 
 interface Props {
-  product: Product & { productImages?: ProductImage[] };
+  product: Partial<Product> & { productImages?: ProductImage[] };
   categories: Category[];
 }
 
@@ -33,14 +34,34 @@ export const ProductForm = ({
   const { register, handleSubmit, formState: { isValid }, getValues, setValue, watch } = useForm<ProductFormInputs>({
     defaultValues: {
       ...product,
-      tags: product.tags.join(','),
+      tags: product.tags?.join(','),
+      sizes: product.sizes ?? []
     }
   })
 
   watch('sizes')
 
   const onSubmit = async (data: ProductFormInputs) => {
-    console.log({ data })
+    const { ...productToSave } = data
+
+    const formData = new FormData()
+
+    if (product.id) {
+      formData.append('id', product.id)
+    }
+
+    formData.append('title', productToSave.title)
+    formData.append('description', productToSave.description)
+    formData.append('inStock', productToSave.inStock.toString())
+    formData.append('price', productToSave.price.toString())
+    formData.append('sizes', productToSave.sizes.toString())
+    formData.append('slug', productToSave.slug)
+    formData.append('tags', productToSave.tags)
+    formData.append('categoryId', productToSave.categoryId.toString())
+    formData.append('gender', productToSave.gender)
+
+    const { ok, errors, data: res, message } = await createUpdateProduct(formData)
+    console.log({ ok, errors, res, message })
   }
 
   const onToggleSize = (size: string) => {
@@ -134,6 +155,14 @@ export const ProductForm = ({
 
       {/* Selector de tallas y fotos */}
       <div className="w-full">
+        <div className="flex flex-col mb-2">
+          <span>Stock</span>
+          <input
+            {...register('inStock', { required: true, min: 0 })}
+            type="number"
+            className="p-2 border rounded-md bg-gray-200" />
+        </div>
+
         {/* As checkboxes */}
         <div className="flex flex-col">
 
@@ -176,7 +205,7 @@ export const ProductForm = ({
                   <Image
                     priority
                     src={`/products/${image.url}`}
-                    alt={product.title}
+                    alt={product.title ? product.title : ''}
                     width={400}
                     height={400}
                     className="rounded shadow-lg"
