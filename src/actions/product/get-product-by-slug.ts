@@ -3,15 +3,11 @@
 import { Product } from "@/interfaces";
 import prisma from "@/lib/prisma"
 
-export const getProductBySlug = async (slug: string): Promise<Product | null> => {
+export const getProductBySlug = async (slug: string) => {
   try {
     const foundProduct = await prisma.product.findUnique({
       where: { slug },
-      include: {
-        productImages: {
-          select: { url: true }
-        }
-      }
+      include: { productImages: true }
     })
 
     if (!foundProduct) throw new Error('Not found product')
@@ -19,6 +15,7 @@ export const getProductBySlug = async (slug: string): Promise<Product | null> =>
     const { productImages, ...product } = foundProduct
     return {
       ...product,
+      productImages,
       images: productImages.map(image => image.url)
     }
   } catch (error) {

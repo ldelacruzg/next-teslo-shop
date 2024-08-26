@@ -64,7 +64,7 @@ export default async function AdminProductsPage({ searchParams }: Props) {
                   </Link>
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                  <Link href={`/admin/products/${slug}`}>{title}</Link>
+                  <Link href={`/admin/products/${slug}`} className='hover:text-blue-600 font-bold transition-all'>{title}</Link>
                 </td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{inStock}</td>
                 <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">{currencyFormat(price)}</td>
