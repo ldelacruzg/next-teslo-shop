@@ -35,7 +35,7 @@ export const getPaginatedProductsWithImages = async ({ limit = 12, page = 1, gen
       })
     ])
 
-    const productsAdapter = products.map(({ productImages, categoryId, ...product }) => {
+    const productsAdapter: Product[] = products.map(({ productImages, ...product }) => {
       return {
         ...product,
         images: productImages.map(image => image.url),

@@ -1,3 +1,4 @@
+import { ProductImage } from "@/components";
 import { CartProdcut } from "@/interfaces";
 import Image from "next/image";
 
@@ -12,10 +13,8 @@ export const OrderCardProducts = ({ products }: Props) => {
         products.map(product => (
           <article key={product.slug + product.size} className="grid grid-cols-4 gap-2 sm:gap-0 lg:max-w-xl">
             <div className="flex items-center justify-start">
-              <Image
-                placeholder="blur"
-                blurDataURL={product.image}
-                src={`/products/${product.image}`}
+              <ProductImage
+                src={product.image}
                 alt={product.title}
                 width={100} height={100}
               />

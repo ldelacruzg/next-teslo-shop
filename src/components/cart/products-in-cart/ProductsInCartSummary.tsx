@@ -4,6 +4,7 @@ import { useHydrated } from "@/hook/useHydrated";
 import { useCartStore } from "@/store"
 import { ProductsInCartSkeleton } from "./ProductsInCartSkeleton";
 import Image from "next/image";
+import { ProductImage } from "@/components";
 
 export const ProductsInCartSummary = () => {
   const { isHydrated } = useHydrated()
@@ -19,7 +20,10 @@ export const ProductsInCartSummary = () => {
         products.map(product => (
           <article key={product.slug + product.size} className="grid grid-cols-4 gap-2 sm:gap-0 lg:max-w-xl">
             <div className="flex items-center justify-start">
-              <Image priority src={`/products/${product.image}`} alt={product.title} width={100} height={100} />
+              <ProductImage
+                src={product.image}
+                alt={product.title}
+                width={100} height={100} />
             </div>
             <div className="flex flex-col col-span-2">
               <span className="font-semibold">{product.title}</span>

@@ -14,11 +14,11 @@ export const ProductGridItem = ({ product }: Props) => {
     <article className="flex flex-col fade-in">
       <Link href={`/products/${product.slug}`}>
         {
-          product.images.length > 0 ?
+          product.images.length > 1 ?
             (
               <HoverImage
-                image={`/products/${product.images.at(0)}`}
-                hoverImage={`/products/${product.images.at(1)}`}
+                image={product.images.at(0)!}
+                hoverImage={product.images.at(1)!}
                 alt={product.title}
               />
             ) :

@@ -1,5 +1,6 @@
 "use client";
 
+import { ProductImage } from "@/components";
 import Image from "next/image"
 import { useState } from "react";
 
@@ -13,9 +14,7 @@ export const HoverImage = ({ hoverImage, image, alt }: Props) => {
   const [currentImage, setcurrentImage] = useState(image)
 
   return (
-    <Image
-      placeholder="blur"
-      blurDataURL={currentImage}
+    <ProductImage
       onMouseEnter={() => setcurrentImage(hoverImage)}
       onMouseLeave={() => setcurrentImage(image)}
       className="fade-in transition-all"

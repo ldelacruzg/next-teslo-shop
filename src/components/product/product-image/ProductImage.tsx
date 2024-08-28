@@ -6,9 +6,11 @@ interface Props {
   className?: React.StyleHTMLAttributes<HTMLImageElement>['className'];
   width: number;
   height: number;
+  onMouseEnter?: React.MouseEventHandler<HTMLImageElement> | undefined;
+  onMouseLeave?: React.MouseEventHandler<HTMLImageElement> | undefined;
 }
 
-export const ProductImage = ({ alt, height, width, className, src }: Props) => {
+export const ProductImage = ({ alt, height, width, className, src, onMouseEnter, onMouseLeave }: Props) => {
   const customSrc = src
     ? src.startsWith('http')
       ? src
@@ -20,6 +22,8 @@ export const ProductImage = ({ alt, height, width, className, src }: Props) => {
       priority
       placeholder='blur'
       blurDataURL={customSrc}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       className={`w-auto h-auto object-cover ${className}`}
       src={customSrc}
       alt={alt} width={width} height={height} />
