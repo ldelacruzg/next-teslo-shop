@@ -6,7 +6,7 @@ import { IoTrashOutline } from "react-icons/io5";
 import clsx from "clsx";
 
 import { Category, Product, ProductImage } from "@/interfaces";
-import { createUpdateProduct } from "@/actions";
+import { createUpdateProduct, removeProductImage } from "@/actions";
 import { ProductImage as Image } from "@/components";
 
 interface Props {
@@ -84,6 +84,10 @@ export const ProductForm = ({
     const sizes = new Set(getValues('sizes'))
     sizes.has(size) ? sizes.delete(size) : sizes.add(size)
     setValue('sizes', Array.from(sizes))
+  }
+
+  const onDeleteImage = async (image: ProductImage) => {
+    await removeProductImage(image)
   }
 
   return (
@@ -216,7 +220,7 @@ export const ProductForm = ({
             {
               product.productImages?.map(image => (
                 <div key={image.id} className="relative" >
-                  <button type="button" className="absolute right-0 bottom-0 rounded-full p-2 bg-red-600 text-white">
+                  <button onClick={() => onDeleteImage(image)} type="button" className="absolute right-0 bottom-0 rounded-full p-2 bg-red-600 text-white">
                     <IoTrashOutline size={24} />
                   </button>
                   <Image
