@@ -3,6 +3,7 @@
 import { Size } from '@/interfaces';
 import prisma from '@/lib/prisma';
 import { Gender, Product } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 import { z, ZodError } from 'zod'
 
 const productSchema = z.object({
@@ -63,8 +64,10 @@ export const createUpdateProduct = async (formData: FormData) => {
       return product
     })
 
+    revalidatePath('/admin/prodcuts')
+    revalidatePath(`/admin/prodcuts/${product.slug}`)
+    revalidatePath(`/prodcuts/${product.slug}`)
 
-    console.log(product)
     return {
       ok: true,
       data: product,

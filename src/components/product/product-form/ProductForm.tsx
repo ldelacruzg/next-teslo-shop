@@ -1,11 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useForm } from "react-hook-form";
+import { IoTrashOutline } from "react-icons/io5";
 import clsx from "clsx";
 
 import { Category, Product, ProductImage } from "@/interfaces";
-import Image from "next/image";
-import { IoTrashOutline } from "react-icons/io5";
 import { createUpdateProduct } from "@/actions";
 
 interface Props {
@@ -31,6 +32,7 @@ export const ProductForm = ({
   product: { images, ...product },
   categories
 }: Props) => {
+  const router = useRouter()
   const { register, handleSubmit, formState: { isValid }, getValues, setValue, watch } = useForm<ProductFormInputs>({
     defaultValues: {
       ...product,
@@ -60,8 +62,14 @@ export const ProductForm = ({
     formData.append('categoryId', productToSave.categoryId.toString())
     formData.append('gender', productToSave.gender)
 
-    const { ok, errors, data: res, message } = await createUpdateProduct(formData)
-    console.log({ ok, errors, res, message })
+    const { ok, errors, data: res } = await createUpdateProduct(formData)
+
+    if (!ok) {
+      console.log({ errors })
+      return
+    }
+
+    router.replace(`/admin/products/${res?.slug}`)
   }
 
   const onToggleSize = (size: string) => {
