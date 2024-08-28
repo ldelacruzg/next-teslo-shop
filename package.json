@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpx prisma migrate deploy && next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "ts-node prisma/seed.ts"
+    "seed": "pnpx prisma db seed"
   },
   "dependencies": {
     "@paypal/paypal-js": "^8.1.0",
