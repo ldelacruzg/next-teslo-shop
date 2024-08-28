@@ -1,13 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { IoTrashOutline } from "react-icons/io5";
 import clsx from "clsx";
 
 import { Category, Product, ProductImage } from "@/interfaces";
 import { createUpdateProduct } from "@/actions";
+import { ProductImage as Image } from "@/components";
 
 interface Props {
   product: Partial<Product> & { productImages?: ProductImage[] };
@@ -26,6 +26,7 @@ interface ProductFormInputs {
   title: string;
   categoryId: string;
   gender: 'men' | 'women' | 'kid' | 'unisex';
+  images?: FileList;
 }
 
 export const ProductForm = ({
@@ -37,14 +38,15 @@ export const ProductForm = ({
     defaultValues: {
       ...product,
       tags: product.tags?.join(','),
-      sizes: product.sizes ?? []
+      sizes: product.sizes ?? [],
+      images: undefined
     }
   })
 
   watch('sizes')
 
   const onSubmit = async (data: ProductFormInputs) => {
-    const { ...productToSave } = data
+    const { images, ...productToSave } = data
 
     const formData = new FormData()
 
@@ -61,6 +63,12 @@ export const ProductForm = ({
     formData.append('tags', productToSave.tags)
     formData.append('categoryId', productToSave.categoryId.toString())
     formData.append('gender', productToSave.gender)
+
+    if (images) {
+      for (let i = 0; i < images.length; i++) {
+        formData.append('images', images[i])
+      }
+    }
 
     const { ok, errors, data: res } = await createUpdateProduct(formData)
 
@@ -196,10 +204,11 @@ export const ProductForm = ({
           <div className="flex flex-col mb-2">
             <span>Images</span>
             <input
+              {...register('images')}
               type="file"
               multiple
               className="p-2 border rounded-md bg-gray-200"
-              accept="image/png, image/jpeg"
+              accept="image/png, image/jpeg, image/avif"
             />
           </div>
 
@@ -211,8 +220,7 @@ export const ProductForm = ({
                     <IoTrashOutline size={24} />
                   </button>
                   <Image
-                    priority
-                    src={`/products/${image.url}`}
+                    src={image.url}
                     alt={product.title ? product.title : ''}
                     width={400}
                     height={400}

@@ -44,19 +44,15 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
             (
               images.map(image => (
                 <SwiperSlide key={image}>
-                  <Image
-                    placeholder='blur'
-                    blurDataURL={`/products/${image}`}
-                    src={`/products/${image}`}
+                  <ProductImage
+                    src={image}
                     alt={title}
-                    width={1024} height={800}
-                    className='rounded object-contain'
-                  />
+                    width={1024} height={800} />
                 </SwiperSlide>
               ))
             ) :
             (
-              <ProductImage alt={''} width={1024} height={1024} />
+              <ProductImage alt={''} width={1024} height={800} />
             )
         }
       </Swiper>
@@ -74,14 +70,10 @@ export const ProductSlideshow = ({ images, title, className }: Props) => {
             (
               images.map(image => (
                 <SwiperSlide key={image}>
-                  <Image
-                    placeholder='blur'
-                    blurDataURL={`/products/${image}`}
-                    src={`/products/${image}`}
+                  <ProductImage
+                    src={image}
                     alt={title}
-                    width={300} height={300}
-                    className='rounded object-contain'
-                  />
+                    width={300} height={300} />
                 </SwiperSlide>
               ))
             ) :

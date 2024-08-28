@@ -18,6 +18,8 @@ export const ProductImage = ({ alt, height, width, className, src }: Props) => {
   return (
     <Image
       priority
+      placeholder='blur'
+      blurDataURL={customSrc}
       className={`w-auto h-auto object-cover ${className}`}
       src={customSrc}
       alt={alt} width={width} height={height} />

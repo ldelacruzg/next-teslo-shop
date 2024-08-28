@@ -27,3 +27,9 @@ export class UnauthorizedException extends Error {
     super(message)
   }
 }
+
+export class FailedLoadImages extends Error {
+  constructor(message: string = "Failed to load images") {
+    super(message)
+  }
+}

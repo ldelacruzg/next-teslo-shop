@@ -1,6 +1,8 @@
 'use server';
 
+import { FailedLoadImages } from '@/exceptions';
 import { Size } from '@/interfaces';
+import { cloudinary } from '@/lib/cloudinary';
 import prisma from '@/lib/prisma';
 import { Gender, Product } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
@@ -16,7 +18,7 @@ const productSchema = z.object({
   slug: z.string(),
   tags: z.string(),
   categoryId: z.string().uuid(),
-  gender: z.nativeEnum(Gender)
+  gender: z.nativeEnum(Gender),
 })
 
 export const createUpdateProduct = async (formData: FormData) => {
@@ -61,6 +63,15 @@ export const createUpdateProduct = async (formData: FormData) => {
         })
       }
 
+      if (formData.getAll('images').length > 0) {
+        const images = await uploadImages(formData.getAll('images') as File[])
+        if (!images) throw new FailedLoadImages()
+
+        await tx.productImage.createMany({
+          data: images.map(url => ({ productId: product.id, url }))
+        })
+      }
+
       return product
     })
 
@@ -85,10 +96,37 @@ export const createUpdateProduct = async (formData: FormData) => {
       }
     }
 
+    if (error instanceof FailedLoadImages) {
+      return {
+        ok: false,
+        data: null,
+        message: error.message
+      }
+    }
+
     return {
       ok: false,
       data: null,
       message: 'Unknown Error'
     }
+  }
+}
+
+const uploadImages = async (images: File[]): Promise<string[] | null> => {
+  try {
+    const promises = images.map(async image => {
+      const buffer = await image.arrayBuffer()
+      const base64Image = Buffer.from(buffer).toString('base64')
+      const result = await cloudinary
+        .uploader
+        .upload(`data:image/png;base64,${base64Image}`, { folder: 'products' })
+      return result.secure_url;
+    })
+
+    const uploadImages = await Promise.all(promises)
+    return uploadImages
+  } catch (error) {
+    console.log({ error })
+    return null
   }
 }
